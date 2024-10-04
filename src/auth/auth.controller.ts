@@ -1,7 +1,6 @@
 import { authService } from './auth.service';
 import { Request, Response, NextFunction } from 'express';
 import asyncWrapper from 'express-async-handler';
-import { AppError } from '../utils/AppError';
 
 class AuthController {
 	signUp = asyncWrapper(

@@ -7,5 +7,5 @@ export const generateAccessToken = (id: string) => {
 };
 
 export const verifyToken = (token: string, secret: string) => {
-	return jwt.verify(token, secret);
+	return jwt.verify(token, secret); // decoded: { id: string }
 };
