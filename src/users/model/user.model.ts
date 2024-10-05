@@ -1,6 +1,5 @@
-import { model, Schema, Document, Model } from 'mongoose';
+import { model, Schema, Model } from 'mongoose';
 import { IUser, UserDocument } from './IUser';
-import { hash, compare } from 'bcryptjs';
 import { addUserAction } from './user.action';
 
 const userSchema = new Schema<IUser>(
@@ -9,14 +8,10 @@ const userSchema = new Schema<IUser>(
 		email: { type: String },
 		password: { type: String, select: false },
 		image: { type: String, default: '' },
+		products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
 	},
 	{ timestamps: true },
 );
-
-userSchema.pre('save', async function (next) {
-	if (!this.isModified('password')) return next();
-	this.password = await hash(this.password, 10);
-});
 
 addUserAction(userSchema);
 

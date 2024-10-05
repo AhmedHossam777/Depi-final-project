@@ -19,6 +19,7 @@ class AuthService {
 			throw new AppError('User not found', 404);
 		}
 		const isMatch = await user.comparePassword(password);
+
 		if (!isMatch) {
 			throw new AppError('Invalid password', 400);
 		}
