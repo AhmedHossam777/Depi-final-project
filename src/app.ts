@@ -6,6 +6,7 @@ import usersRouter from './users/users.router';
 import authRouter from './auth/auth.router';
 import productRouter from './products/product.router';
 import categoryRouter from './category/category.router';
+import subCategoryRouter from './subCategory/subCategory.router';
 
 import { globalErrorHandler } from './utils/globalErrorHandler';
 import { AppError } from './utils/AppError';
@@ -26,6 +27,7 @@ app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/sub-categories', subCategoryRouter);
 
 // Global error handler
 app.use('*', (req, res, next) => {

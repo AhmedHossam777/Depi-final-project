@@ -1,6 +1,8 @@
+import { Document } from 'mongoose';
+
 export interface ICategory {
 	name: string;
 	description: string;
 }
 
-//	author: UserDocument['_id'];
+export type CategoryDocument = ICategory & Document;

@@ -33,11 +33,10 @@ class CategoryService {
 	}
 
 	async deleteCategory(id: string) {
-		const category = await Category.findById(id);
+		const category = await Category.findByIdAndDelete(id);
 		if (!category) {
 			throw new AppError('Category not found', 404);
 		}
-		await category.deleteOne();
 	}
 }
 
