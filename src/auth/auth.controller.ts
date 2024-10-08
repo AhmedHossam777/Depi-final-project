@@ -6,6 +6,7 @@ class AuthController {
 	signUp = asyncWrapper(
 		async (req: Request, res: Response, next: NextFunction) => {
 			const { user, accessToken } = await authService.signUp(req.body);
+			console.log(accessToken);
 			res.status(201).json({
 				status: 'success',
 				data: { user, accessToken },

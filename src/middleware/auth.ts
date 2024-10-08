@@ -19,7 +19,7 @@ const auth = asyncWrapper(
 
 		if (!token) throw new AppError('Unauthorized', 401);
 
-		const decoded: any = verifyToken(token, process.env.ACCESS_TOKEN_SECRET!);
+		const decoded: any = verifyToken(token, process.env.JWT_SECRET!);
 		const user = await usersService.getUser(decoded.id);
 
 		if (!user) throw new AppError('Unauthorized', 401);
