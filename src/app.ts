@@ -7,16 +7,15 @@ import authRouter from './auth/auth.router';
 import productRouter from './products/product.router';
 import categoryRouter from './category/category.router';
 import subCategoryRouter from './subCategory/subCategory.router';
+import wishlistRouter from './wishlist/wishlist.router';
 
 import { globalErrorHandler } from './utils/globalErrorHandler';
 import { AppError } from './utils/AppError';
 
 const app: Application = express();
 
-// Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Middleware to parse URL-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan('dev'));
@@ -28,11 +27,12 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/sub-categories', subCategoryRouter);
+app.use('/api/v1/wishlist', wishlistRouter);
 
 // Global error handler
 app.use('*', (req, res, next) => {
 	return next(
-		new AppError(`Can't find ${req.originalUrl} on this server!`, 404)
+		new AppError(`Can't find ${req.originalUrl} on this server!`, 404),
 	);
 });
 app.use(globalErrorHandler);
