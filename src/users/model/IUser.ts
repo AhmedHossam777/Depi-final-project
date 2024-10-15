@@ -7,6 +7,7 @@ export interface IUser {
 	password: string;
 	image: string;
 	products: ProductDocument['_id'][];
+	admin: boolean;
 }
 
 interface UserActions {

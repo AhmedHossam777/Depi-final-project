@@ -9,6 +9,7 @@ const userSchema = new Schema<IUser>(
 		password: { type: String, select: false },
 		image: { type: String, default: '' },
 		products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+		admin: { type: Boolean, default: false },
 	},
 	{ timestamps: true },
 );
