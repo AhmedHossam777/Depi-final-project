@@ -4,16 +4,23 @@ import { ObjectId } from 'mongoose';
 
 export class WishlistService {
 	async addProductToWishlist(userId: string, productId: string) {
-		const wishlist = await Wishlist.findOne({ user: userId });
+		const wishlist = await Wishlist.findOne({ user: userId.toString() });
 		if (!wishlist) {
 			throw new AppError('Wishlist not found', 404);
 		}
+		if (wishlist.products.includes(productId)) {
+			throw new AppError('Product already in wishlist', 400);
+		}
+
 		wishlist.products.push(productId);
+
 		await wishlist.save();
+
+		return wishlist;
 	}
 
 	async removeProductFromWishlist(userId: string, productId: string) {
-		const wishlist = await Wishlist.findOne({ user: userId });
+		const wishlist = await Wishlist.findOne({ user: userId.toString() });
 		if (!wishlist) {
 			throw new AppError('Wishlist not found', 404);
 		}
@@ -24,9 +31,12 @@ export class WishlistService {
 	}
 
 	async getWishlist(userId: string) {
-		const wishlist = await Wishlist.findOne({ user: userId }).populate(
-			'products',
-		);
+		const wishlist = await Wishlist.findOne({
+			user: userId.toString(),
+		}).populate('products');
+
+		console.log(wishlist);
+
 		if (!wishlist) {
 			throw new AppError('Wishlist not found', 404);
 		}
@@ -34,7 +44,7 @@ export class WishlistService {
 	}
 
 	async clearWishlist(userId: string) {
-		const wishlist = await Wishlist.findOne({ user: userId });
+		const wishlist = await Wishlist.findOne({ user: userId.toString() });
 		if (!wishlist) {
 			throw new AppError('Wishlist not found', 404);
 		}
@@ -43,7 +53,9 @@ export class WishlistService {
 	}
 
 	async createWishlist(userId: string) {
-		const existingWishlist = await Wishlist.findOne({ user: userId });
+		const existingWishlist = await Wishlist.findOne({
+			user: userId.toString(),
+		});
 		if (existingWishlist) {
 			throw new AppError('Wishlist already exists', 400);
 		}
@@ -52,7 +64,9 @@ export class WishlistService {
 	}
 
 	async deleteWishlist(userId: string) {
-		const wishlist = await Wishlist.findOneAndDelete({ user: userId });
+		const wishlist = await Wishlist.findOneAndDelete({
+			user: userId.toString(),
+		});
 		if (!wishlist) {
 			throw new AppError('Wishlist not found', 404);
 		}

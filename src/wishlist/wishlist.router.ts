@@ -8,7 +8,11 @@ router.get('/', auth, wishlistController.getWishlist);
 router.post('/', auth, wishlistController.createWishlist);
 router.delete('/', auth, wishlistController.clearWishlist);
 router.delete('/:id', auth, wishlistController.deleteWishlist);
-router.post('/:id', auth, wishlistController.addProductToWishlist);
-router.delete('/:id', auth, wishlistController.removeProductFromWishlist);
+router.post('/product/:id', auth, wishlistController.addProductToWishlist);
+router.delete(
+	'/product/:id',
+	auth,
+	wishlistController.removeProductFromWishlist,
+);
 
 export default router;

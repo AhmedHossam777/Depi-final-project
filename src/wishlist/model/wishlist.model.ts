@@ -6,6 +6,7 @@ import { addWishlistAction } from './wishlist.action';
 const wishlistSchema = new Schema<IWishlist>(
 	{
 		products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+		user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 	},
 	{ timestamps: true },
 );
