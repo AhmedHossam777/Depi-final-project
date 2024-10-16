@@ -11,11 +11,11 @@ class SubCategoryService {
 			throw new AppError('Category not found', 404);
 		}
 
-		const subCategory = await SubCategory.create(data);
+		const subCategory = new SubCategory(data);
 
 		[category.subCategories].push(subCategory._id);
 
-		await category.save();
+		await Promise.all([subCategory.save(), category.save()]);
 		return subCategory;
 	}
 
@@ -55,6 +55,7 @@ class SubCategoryService {
 	async deleteSubCategory(id: string) {
 		const deletedSubCategory = await SubCategory.findByIdAndDelete(id);
 		const category = await Category.findById(deletedSubCategory?.category);
+
 		if (category) {
 			category.subCategories = (
 				category.subCategories as mongoose.Types.ObjectId[]
