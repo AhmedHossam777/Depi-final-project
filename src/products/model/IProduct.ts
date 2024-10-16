@@ -1,6 +1,6 @@
 import { UserDocument } from '../../users/model/IUser';
 import { Document } from 'mongoose';
-import { CategoryDocument } from '../../category/model/ICategory';
+import { SubCategoryDocument } from '../../subCategory/model/ISubCategory';
 
 export interface IProduct {
 	author: UserDocument['_id'];
@@ -9,7 +9,7 @@ export interface IProduct {
 	description: string;
 	imageURL: string;
 	numOfLikes: number;
-	category: CategoryDocument['_id'];
+	subCategory: SubCategoryDocument['_id'];
 }
 
 interface ProductActions {

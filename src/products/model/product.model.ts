@@ -9,7 +9,7 @@ const productSchema = new Schema<IProduct>(
 		imageURL: { type: String },
 		numOfLikes: { type: Number, default: 0 },
 		author: { type: Schema.Types.ObjectId, ref: 'User' },
-		category: { type: Schema.Types.ObjectId, ref: 'Category' },
+		subCategory: { type: Schema.Types.ObjectId, ref: 'SubCategory' },
 	},
 	{
 		timestamps: true,

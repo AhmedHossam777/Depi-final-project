@@ -5,7 +5,7 @@ const categorySchema = new Schema<ICategory>(
 	{
 		name: { type: String },
 		description: { type: String },
-		products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+		subCategories: [{ type: Schema.Types.ObjectId, ref: 'SubCategory' }],
 	},
 	{
 		timestamps: true,

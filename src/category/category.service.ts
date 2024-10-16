@@ -1,5 +1,6 @@
 import { AppError } from '../utils/AppError';
 import { Category } from './model/category.model';
+import { ICategory } from './model/ICategory';
 
 class CategoryService {
 	async createCategory(name: string, description: string) {
@@ -21,14 +22,12 @@ class CategoryService {
 		return category;
 	}
 
-	async updateCategory(id: string, name: string, description: string) {
-		const category = await Category.findById(id);
+	async updateCategory(id: string, data: Partial<ICategory>) {
+		const category = await Category.findByIdAndUpdate(id, data, { new: true });
 		if (!category) {
 			throw new AppError('Category not found', 404);
 		}
-		category.name = name;
-		category.description = description;
-		await category.save();
+
 		return category;
 	}
 

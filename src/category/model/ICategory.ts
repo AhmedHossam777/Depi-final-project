@@ -1,10 +1,10 @@
 import { Document } from 'mongoose';
-import { ProductDocument } from '../../products/model/IProduct';
+import { SubCategoryDocument } from '../../subCategory/model/ISubCategory';
 
 export interface ICategory {
 	name: string;
 	description: string;
-	products: ProductDocument['_id'][];
+	subCategories: SubCategoryDocument['_id'];
 }
 
 export type CategoryDocument = ICategory & Document;

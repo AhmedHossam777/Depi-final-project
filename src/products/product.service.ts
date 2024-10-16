@@ -2,6 +2,7 @@ import { Product } from './model/product.model';
 import { AppError } from '../utils/AppError';
 import { IProduct } from './model/IProduct';
 import { User } from '../users/model/user.model';
+import { SubCategory } from '../subCategory/model/subCategory.model';
 
 class ProductService {
 	createProduct = async (data: IProduct, user: any) => {
@@ -9,12 +10,50 @@ class ProductService {
 		product.author = user._id;
 		const author = await User.findById(user._id);
 		author?.products.push(product._id);
-		await Promise.all([product.save(), author?.save()]);
+
+		const subCategoryId = product.subCategory;
+		const subCategory = await SubCategory.findById(subCategoryId);
+
+		if (!subCategory) {
+			throw new AppError('SubCategory not found', 404);
+		}
+
+		subCategory.products.push(product._id);
+
+		await Promise.all([product.save(), author?.save(), subCategory.save()]);
 		return product;
 	};
 
-	getAllProducts = async () => {
-		return Product.find();
+	getAllProducts = async (query?: any) => {
+		const { page = 1, limit = 10, search = '', ...filters } = query;
+
+		const searchQuery = search
+			? {
+					$or: [
+						{ name: { $regex: search, $options: 'i' } },
+						{ description: { $regex: search, $options: 'i' } },
+					],
+				}
+			: {};
+
+		const products = await Product.find({
+			...filters,
+			...searchQuery,
+		})
+			.limit(limit * 1)
+			.skip((page - 1) * limit)
+			.exec();
+
+		const count = await Product.countDocuments({
+			...filters,
+			...searchQuery,
+		});
+
+		return {
+			products,
+			totalPages: Math.ceil(count / limit),
+			currentPage: page,
+		};
 	};
 
 	getProduct = async (id: string) => {
@@ -64,7 +103,17 @@ class ProductService {
 				productAuthor?.products.splice(i, 1);
 			}
 		}
-		await productAuthor?.save();
+
+		const subCategory = await SubCategory.findById(product.subCategory);
+		if (subCategory) {
+			for (let i = 0; i < (subCategory.products as string[]).length; i++) {
+				if ((subCategory.products[i] as string).toString() === id) {
+					subCategory.products.splice(i, 1);
+				}
+			}
+		}
+
+		await Promise.all([productAuthor?.save(), subCategory?.save()]);
 	};
 }
 

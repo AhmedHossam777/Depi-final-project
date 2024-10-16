@@ -6,9 +6,16 @@ const subCategorySchema = new Schema({
 	name: { type: String, required: true },
 	description: { type: String, required: true },
 	category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+	products: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Product',
+			required: true,
+		},
+	],
 });
 
 export const SubCategory = model<ISubCategory & Document>(
 	'SubCategory',
-	subCategorySchema
+	subCategorySchema,
 );

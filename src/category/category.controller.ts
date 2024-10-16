@@ -21,12 +21,7 @@ class CategoryController {
 
 	updateCategory = asyncWrapper(async (req, res) => {
 		const { id } = req.params;
-		const { name, description } = req.body;
-		const category = await categoryService.updateCategory(
-			id,
-			name,
-			description,
-		);
+		const category = await categoryService.updateCategory(id, req.body);
 		res.status(200).json(category);
 	});
 
