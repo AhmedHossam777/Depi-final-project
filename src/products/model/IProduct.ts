@@ -7,8 +7,8 @@ export interface IProduct {
 	title: string;
 	price: number;
 	description: string;
-	imageURL: string;
-	numOfLikes: number;
+	imageURL?: string;
+	numOfLikes?: number | null;
 	subCategory: SubCategoryDocument['_id'];
 }
 

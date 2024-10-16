@@ -24,7 +24,7 @@ class ProductService {
 		return product;
 	};
 
-	getAllProducts = async (query?: any) => {
+	getAllProducts = async (query: any = {}) => {
 		const { page = 1, limit = 10, search = '', ...filters } = query;
 
 		const searchQuery = search
@@ -40,6 +40,8 @@ class ProductService {
 			...filters,
 			...searchQuery,
 		})
+			.populate('author', 'name email')
+			.populate('subCategory', 'name')
 			.limit(limit * 1)
 			.skip((page - 1) * limit)
 			.exec();
