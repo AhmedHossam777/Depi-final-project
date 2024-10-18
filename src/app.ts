@@ -15,6 +15,8 @@ import { AppError } from './utils/AppError';
 import passport from 'passport';
 import session from 'express-session';
 
+import './config/passport';
+
 const app: Application = express();
 
 const corsOptions = {
