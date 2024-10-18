@@ -1,6 +1,11 @@
 import { authService } from './auth.service';
 import { Request, Response, NextFunction } from 'express';
 import asyncWrapper from 'express-async-handler';
+import { UserDocument } from '../users/model/IUser';
+
+interface AuthenticatedRequest extends Request {
+	user?: any;
+}
 
 class AuthController {
 	signUp = asyncWrapper(
@@ -10,7 +15,7 @@ class AuthController {
 				status: 'success',
 				data: { user, accessToken },
 			});
-		},
+		}
 	);
 
 	signIn = asyncWrapper(
@@ -23,7 +28,19 @@ class AuthController {
 				status: 'success',
 				data: { user, accessToken },
 			});
-		},
+		}
+	);
+
+	handleOAuthSuccess = asyncWrapper(
+		async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+			const user = req.user as UserDocument;
+			const token = await authService.authenticateUser(user);
+
+			res.status(200).json({
+				status: 'success',
+				data: { user, token },
+			});
+		}
 	);
 }
 

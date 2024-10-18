@@ -12,6 +12,8 @@ import wishlistRouter from './wishlist/wishlist.router';
 
 import { globalErrorHandler } from './utils/globalErrorHandler';
 import { AppError } from './utils/AppError';
+import passport from 'passport';
+import session from 'express-session';
 
 const app: Application = express();
 
@@ -26,6 +28,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(express.json());
+
+app.use(
+	session({
+		secret: 'secret',
+		resave: false,
+		saveUninitialized: false,
+	})
+);
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use('/api/v1/users', usersRouter);
