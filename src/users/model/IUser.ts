@@ -2,10 +2,10 @@ import { Document } from 'mongoose';
 import { ProductDocument } from '../../products/model/IProduct';
 
 export interface IUser {
-	name: string;
+	displayName: string;
 	email: string;
 	password: string;
-	image: string;
+	profilePhoto: string;
 	products: ProductDocument['_id'][];
 	admin: boolean;
 }

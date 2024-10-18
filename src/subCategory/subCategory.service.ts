@@ -13,7 +13,7 @@ class SubCategoryService {
 
 		const subCategory = new SubCategory(data);
 
-		[category.subCategories].push(subCategory._id);
+		category.subCategories?.push(subCategory._id as mongoose.Types.ObjectId);
 
 		await Promise.all([subCategory.save(), category.save()]);
 		return subCategory;
@@ -43,7 +43,7 @@ class SubCategoryService {
 			subCategory,
 			{
 				new: true,
-			},
+			}
 		);
 		if (!newSubCategory) {
 			throw new AppError('SubCategory not found', 404);
@@ -61,7 +61,7 @@ class SubCategoryService {
 				category.subCategories as mongoose.Types.ObjectId[]
 			).filter(
 				(subCategoryId: mongoose.Types.ObjectId) =>
-					subCategoryId.toString() !== id,
+					subCategoryId.toString() !== id
 			);
 			await category.save();
 		}

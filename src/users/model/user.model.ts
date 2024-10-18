@@ -4,14 +4,14 @@ import { addUserAction } from './user.action';
 
 const userSchema = new Schema<IUser>(
 	{
-		name: { type: String },
+		displayName: { type: String },
 		email: { type: String },
 		password: { type: String, select: false },
-		image: { type: String, default: '' },
+		profilePhoto: { type: String, default: '' },
 		products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
 		admin: { type: Boolean, default: false },
 	},
-	{ timestamps: true },
+	{ timestamps: true }
 );
 
 addUserAction(userSchema);

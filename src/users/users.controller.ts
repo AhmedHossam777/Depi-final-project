@@ -1,6 +1,5 @@
 import { usersService } from './users.service';
 import { Request, Response, NextFunction } from 'express';
-import { AppError } from '../utils/AppError';
 import asyncWrapper from 'express-async-handler';
 
 class UsersController {
@@ -12,7 +11,7 @@ class UsersController {
 				status: 'success',
 				user,
 			});
-		},
+		}
 	);
 
 	getUser = asyncWrapper(
@@ -23,7 +22,7 @@ class UsersController {
 				status: 'success',
 				user,
 			});
-		},
+		}
 	);
 
 	getAllUsers = asyncWrapper(
@@ -34,7 +33,7 @@ class UsersController {
 				status: 'success',
 				users,
 			});
-		},
+		}
 	);
 
 	updateUser = asyncWrapper(
@@ -45,7 +44,7 @@ class UsersController {
 				status: 'success',
 				user,
 			});
-		},
+		}
 	);
 
 	deleteUser = asyncWrapper(
@@ -55,7 +54,7 @@ class UsersController {
 			res.status(204).json({
 				status: 'success',
 			});
-		},
+		}
 	);
 }
 
