@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import usersRouter from './users/users.router';
 import authRouter from './auth/auth.router';
@@ -8,25 +9,22 @@ import productRouter from './products/product.router';
 import categoryRouter from './category/category.router';
 import subCategoryRouter from './subCategory/subCategory.router';
 import wishlistRouter from './wishlist/wishlist.router';
-import cors from 'cors';
 
 import { globalErrorHandler } from './utils/globalErrorHandler';
 import { AppError } from './utils/AppError';
 
 const app: Application = express();
 
+const corsOptions = {
+	origin: 'http://localhost:5173',
+};
+
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(
-	cors({
-		origin: '*',
-		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-	})
-);
 
 // Routes
 app.use('/api/v1/users', usersRouter);
