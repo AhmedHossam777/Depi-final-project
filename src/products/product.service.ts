@@ -25,7 +25,7 @@ class ProductService {
 	};
 
 	getAllProducts = async (query: any = {}) => {
-		const { page = 1, limit = 10, search = '', ...filters } = query;
+		let { page = 1, limit = 10, search = '', ...filters } = query;
 
 		const searchQuery = search
 			? {
