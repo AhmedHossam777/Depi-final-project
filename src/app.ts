@@ -9,6 +9,7 @@ import productRouter from './products/product.router';
 import categoryRouter from './category/category.router';
 import subCategoryRouter from './subCategory/subCategory.router';
 import wishlistRouter from './wishlist/wishlist.router';
+import cartRouter from './cart/cart.router';
 
 import { globalErrorHandler } from './utils/globalErrorHandler';
 import { AppError } from './utils/AppError';
@@ -36,6 +37,10 @@ app.use(
 		secret: 'secret',
 		resave: false,
 		saveUninitialized: false,
+		cookie: {
+			secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+			sameSite: 'none', // Required for cross-site cookies
+		},
 	})
 );
 
@@ -50,6 +55,7 @@ app.use('/api/v1/products', productRouter);
 app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/sub-categories', subCategoryRouter);
 app.use('/api/v1/wishlist', wishlistRouter);
+app.use('/api/v1/cart', cartRouter);
 
 // Global error handler
 app.use('*', (req, res, next) => {

@@ -12,7 +12,8 @@ router.post('/product/:id', auth, wishlistController.addProductToWishlist);
 router.delete(
 	'/product/:id',
 	auth,
-	wishlistController.removeProductFromWishlist,
+	wishlistController.removeProductFromWishlist
 );
 
 export default router;
+wishlistController;
