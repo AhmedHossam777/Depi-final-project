@@ -12,11 +12,11 @@ class ProductController {
 			const product = await productService.createProduct(req.body, req.user);
 
 			res.status(201).json(product);
-		},
+		}
 	);
 
 	getAllProducts = asyncWrapper(async (req: Request, res: Response) => {
-		const products = await productService.getAllProducts();
+		const products = await productService.getAllProducts(req.query);
 		res.status(200).json(products);
 	});
 
@@ -30,17 +30,17 @@ class ProductController {
 			const product = await productService.updateProduct(
 				req.params.id,
 				req.body,
-				req.user,
+				req.user
 			);
 			res.status(200).json(product);
-		},
+		}
 	);
 
 	deleteProduct = asyncWrapper(
 		async (req: AuthenticatedRequest, res: Response) => {
 			await productService.deleteProduct(req.params.id, req.user);
 			res.status(204).send();
-		},
+		}
 	);
 }
 
